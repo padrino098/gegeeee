@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Moving words — wala wala tulog ka na</title>
+  <style>
+    :root{
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --accent: #f97316;
+      --speed: 12s; /* change to make it faster/slower */
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, var(--bg) 0%, #071029 100%);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .marquee-wrap{
+      width:100%;
+      max-width:1100px;
+      overflow:hidden;
+      padding: 40px 20px;
+      box-sizing:border-box;
+      border-radius:16px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* the track that will move */
+    .marquee {
+      display:flex;
+      align-items:center;
+      gap: 48px;
+      will-change: transform;
+      animation: scroll var(--speed) linear infinite;
+    }
+
+    /* duplicate block style so repetition looks continuous */
+    .phrase {
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space:nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    /* per-letter wave */
+    .phrase span{
+      display:inline-block;
+      transform-origin: 50% 70%;
+      animation: wave 1.3s ease-in-out infinite;
+    }
+    /* offset each letter's wave a bit */
+    .phrase span:nth-child(1){ animation-delay: 0s; }
+    .phrase span:nth-child(2){ animation-delay: 0.06s; }
+    .phrase span:nth-child(3){ animation-delay: 0.12s; }
+    .phrase span:nth-child(4){ animation-delay: 0.18s; }
+    .phrase span:nth-child(5){ animation-delay: 0.24s; }
+    .phrase span:nth-child(6){ animation-delay: 0.30s; }
+    .phrase span:nth-child(7){ animation-delay: 0.36s; }
+    .phrase span:nth-child(8){ animation-delay: 0.42s; }
+    .phrase span:nth-child(9){ animation-delay: 0.48s; }
+    .phrase span:nth-child(10){ animation-delay: 0.54s; }
+    .phrase span:nth-child(11){ animation-delay: 0.60s; }
+    .phrase span:nth-child(12){ animation-delay: 0.66s; }
+    .phrase span:nth-child(13){ animation-delay: 0.72s; }
+    .phrase span:nth-child(14){ animation-delay: 0.78s; }
+    .phrase span:nth-child(15){ animation-delay: 0.84s; }
+
+    /* glow/highlight on the middle word "tulog" */
+    .highlight {
+      color: var(--accent);
+      text-shadow: 0 6px 18px rgba(249,115,22,0.18);
+    }
+
+    /* pause on hover */
+    .marquee-wrap:hover .marquee { animation-play-state: paused; }
+
+    @keyframes scroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); } /* because we duplicate content to fill */
+    }
+
+    @keyframes wave {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);    }
+      25%  { transform: translateY(-6px) rotate(-2deg) scale(1.02); }
+      50%  { transform: translateY(0) rotate(0deg) scale(1);    }
+      75%  { transform: translateY(6px) rotate(2deg) scale(0.98);  }
+      100% { transform: translateY(0) rotate(0deg) scale(1);    }
+    }
+
+    /* responsive smaller padding */
+    @media (max-width:420px){
+      .marquee-wrap{ padding:24px 12px; border-radius:12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="marquee-wrap" title="Hover to pause">
+    <!-- We duplicate the phrase twice to make a smooth continuous scroll -->
+    <div class="marquee" aria-hidden="false">
+      <div class="phrase" role="heading" aria-level="1">
+        <!-- break the phrase into spans so each letter waves -->
+        <!-- phrase: "wala wala tulog ka na" -->
+        <!-- keep spaces as non-breaking spaces inside separate spans for consistent offsets -->
+        <span>w</span><span>a</span><span>l</span><span>a</span>
+        <span>&nbsp;</span>
+        <span>w</span><span>a</span><span>l</span><span>a</span>
+        <span>&nbsp;</span>
+        <span class="highlight">t</span><span class="highlight">u</span><span class="highlight">l</span><span class="highlight">o</span><span class="highlight">g</span>
+        <span>&nbsp;</span>
+        <span>k</span><span>a</span><span>&nbsp;</span><span>n</span><span>a</span>
+      </div>
+
+      <!-- duplicate for seamless loop -->
+      <div class="phrase" aria-hidden="true">
+        <span>w</span><span>a</span><span>l</span><span>a</span>
+        <span>&nbsp;</span>
+        <span>w</span><span>a</span><span>l</span><span>a</span>
+        <span>&nbsp;</span>
+        <span class="highlight">t</span><span class="highlight">u</span><span class="highlight">l</span><span class="highlight">o</span><span class="highlight">g</span>
+        <span>&nbsp;</span>
+        <span>k</span><span>a</span><span>&nbsp;</span><span>n</span><span>a</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
